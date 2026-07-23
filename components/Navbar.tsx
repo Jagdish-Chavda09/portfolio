@@ -1,15 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, useScroll, useSpring } from "framer-motion";
-import { Menu, X, FileDown } from "lucide-react";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
+import { Menu, X, FileDown, Sun, Moon } from "lucide-react";
+import { useTheme } from "@/components/ThemeProvider";
+import ResumeModal from "@/components/ResumeModal";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { theme, toggleTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const [isResumeOpen, setIsResumeOpen] = useState(false);
 
-  // Monitor scroll height to adjust navbar background opacity
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       if (window.scrollY > 50) {
         setScrolled(true);
@@ -18,7 +23,14 @@ export default function Navbar() {
       }
     };
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    const handleOpenResume = () => setIsResumeOpen(true);
+    window.addEventListener("open-resume", handleOpenResume);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("open-resume", handleOpenResume);
+    };
   }, []);
 
   // Page scroll progress bar setup
@@ -53,14 +65,14 @@ export default function Navbar() {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap md:flex-nowrap">
           {/* Logo / Branding */}
           <motion.a
             href="#home"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex items-center gap-2 group"
+            className="flex items-center gap-2 group min-h-[44px]"
           >
             <span className="text-xl font-heading font-extrabold tracking-wider text-text-primary">
               JBC<span className="text-accent-teal font-black">.</span>
@@ -79,36 +91,54 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: i * 0.05 }}
-                className="text-sm font-medium text-text-secondary hover:text-accent-teal hover:shadow-glow transition-all duration-200"
+                className="text-sm font-medium text-text-secondary hover:text-accent-teal hover:shadow-glow transition-all duration-200 min-h-[44px] flex items-center"
               >
                 {link.name}
               </motion.a>
             ))}
-            <motion.a
-              href="/resume.pdf"
-              download="Jagdish_Chavda_Resume.pdf"
+            {/* Theme Toggle Button (Desktop) */}
+            <motion.button
+              onClick={toggleTheme}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: 0.25 }}
+              className="w-11 h-11 flex items-center justify-center rounded-lg text-text-secondary hover:text-accent-teal hover:bg-card-dark transition-colors focus:outline-none cursor-pointer"
+              aria-label="Toggle Theme"
+            >
+              {mounted && theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+            </motion.button>
+            <motion.button
+              onClick={() => setIsResumeOpen(true)}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, delay: 0.3 }}
-              className="flex items-center gap-1.5 px-4 py-2 bg-accent-teal text-text-primary rounded-lg text-sm font-semibold hover:bg-accent-teal-hover shadow-[0_4px_14px_0_rgba(13,148,136,0.3)] transition-all duration-200"
+              className="flex items-center gap-1.5 px-4 py-2 bg-accent-teal text-text-primary rounded-lg text-sm font-semibold hover:bg-accent-teal-hover shadow-[0_4px_14px_0_rgba(13,148,136,0.3)] transition-all duration-200 min-h-[40px] cursor-pointer"
             >
               <FileDown size={16} />
               Resume
-            </motion.a>
+            </motion.button>
           </nav>
 
-          {/* Mobile Menu Toggle */}
-          <div className="flex md:hidden items-center gap-4">
-            <a
-              href="/resume.pdf"
-              download="Jagdish_Chavda_Resume.pdf"
-              className="p-2 bg-accent-teal text-text-primary rounded-lg text-sm font-semibold hover:bg-accent-teal-hover shadow-md transition-all duration-200"
+          {/* Mobile Menu Actions */}
+          <div className="flex md:hidden items-center gap-2">
+            {/* Theme Toggle Button (Mobile) */}
+            <button
+              onClick={toggleTheme}
+              className="w-11 h-11 flex items-center justify-center rounded-lg text-text-secondary hover:text-accent-teal hover:bg-card-dark transition-colors focus:outline-none cursor-pointer"
+              aria-label="Toggle Theme"
+            >
+              {mounted && theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+            </button>
+            <button
+              onClick={() => setIsResumeOpen(true)}
+              className="w-11 h-11 flex items-center justify-center bg-accent-teal text-text-primary rounded-lg text-sm font-semibold hover:bg-accent-teal-hover shadow-md transition-all duration-200 cursor-pointer"
+              aria-label="View Resume"
             >
               <FileDown size={18} />
-            </a>
+            </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg text-text-secondary hover:text-text-primary hover:bg-border-dark transition-colors focus:outline-none"
+              className="w-11 h-11 flex items-center justify-center rounded-lg text-text-secondary hover:text-text-primary hover:bg-border-dark transition-colors focus:outline-none cursor-pointer"
               aria-label="Toggle Menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -118,26 +148,31 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Menu Drawer */}
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.2 }}
-          className="md:hidden bg-background-dark/95 backdrop-blur-lg border-b border-border-dark px-4 pt-2 pb-6 space-y-3"
-        >
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={() => setIsOpen(false)}
-              className="block px-3 py-2 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-card-dark transition-all duration-200"
-            >
-              {link.name}
-            </a>
-          ))}
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="md:hidden bg-background-dark/95 backdrop-blur-lg border-b border-border-dark px-4 pt-2 pb-6 space-y-2 overflow-hidden"
+          >
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className="block px-3 py-3 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-card-dark transition-all duration-200 min-h-[44px]"
+              >
+                {link.name}
+              </a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Resume Modal */}
+      <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
     </header>
   );
 }

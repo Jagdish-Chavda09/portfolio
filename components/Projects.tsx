@@ -3,6 +3,7 @@
 import { motion, Variants } from "framer-motion";
 import { projects } from "@/data/projects";
 import { Github, ExternalLink, Folder } from "lucide-react";
+import GithubStats from "./GithubStats";
 
 export default function Projects() {
   const containerVariants: Variants = {
@@ -120,6 +121,9 @@ export default function Projects() {
             </motion.div>
           ))}
         </motion.div>
+
+        {/* Live GitHub Stats Widget */}
+        <GithubStats />
       </div>
     </section>
   );

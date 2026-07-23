@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { User, BookOpen, GraduationCap, Award } from "lucide-react";
+import { BookOpen, GraduationCap, Award } from "lucide-react";
+import Image from "next/image";
 
 export default function About() {
   const stats = [
@@ -35,7 +36,7 @@ export default function About() {
 
         {/* Content Layout Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-          {/* Left Column - Image Mock / Card Graphic */}
+          {/* Left Column - Image Card */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -44,19 +45,24 @@ export default function About() {
             className="col-span-12 md:col-span-5 flex justify-center"
           >
             <div className="relative group">
-              {/* Decorative back glows */}
-              <div className="absolute inset-0 bg-accent-teal rounded-2xl opacity-10 blur-xl group-hover:opacity-20 transition-opacity duration-300" />
-              <div className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-2xl bg-card-dark border border-border-dark flex flex-col items-center justify-center p-6 text-center shadow-lg transition-all duration-300 group-hover:border-accent-teal/50">
-                <div className="p-4 bg-accent-teal-glow rounded-full mb-4">
-                  <User className="text-accent-teal" size={60} />
-                </div>
-                <h3 className="text-xl font-bold text-text-primary">Jagdish B Chavda</h3>
-                <p className="text-sm text-text-secondary mt-2">Java & Spring Boot Developer</p>
-                <div className="w-full h-px bg-border-dark my-4" />
-                <p className="text-xs text-text-secondary italic">
-                  &quot;Striving to build robust, structured, and performant backend solutions.&quot;
-                </p>
-              </div>
+              {/* Outer gradient glow */}
+              <div className="absolute -inset-1.5 bg-gradient-to-r from-accent-teal to-teal-500 rounded-2xl opacity-35 blur-md group-hover:opacity-70 transition duration-500" />
+              
+              {/* Profile Image Container */}
+              <motion.div
+                whileHover={{ scale: 1.03, rotate: 0.5 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className="relative w-[220px] h-[220px] sm:w-[340px] sm:h-[340px] rounded-2xl overflow-hidden bg-card-dark border border-border-dark shadow-2xl flex items-center justify-center"
+              >
+                <Image
+                  src="/profile.png"
+                  alt="Jagdish B Chavda - Java & Spring Boot Developer"
+                  fill
+                  sizes="(max-width: 640px) 220px, 340px"
+                  priority
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </motion.div>
             </div>
           </motion.div>
 

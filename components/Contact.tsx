@@ -25,6 +25,13 @@ export default function Contact() {
     },
   });
 
+  const f1 = () => {
+    window.scrollTo({
+      top:0,
+      behavior: "smooth"
+    })
+  }
+
   const onSubmit = async (data: ContactInput) => {
     setIsSubmitting(true);
     try {

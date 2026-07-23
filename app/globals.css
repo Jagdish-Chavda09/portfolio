@@ -1,28 +1,46 @@
 @import "tailwindcss";
 
-@theme {
-  --color-accent-teal: #0D9488;
-  --color-accent-teal-glow: rgba(13, 148, 136, 0.15);
-  --color-background-dark: #0B0F19;
-  --color-card-dark: #161D30;
-  --color-border-dark: #2A354F;
-  --color-text-primary: #F3F4F6;
-  --color-text-secondary: #9CA3AF;
-  --font-sans: var(--font-inter), sans-serif;
-  --font-heading: var(--font-poppins), sans-serif;
+:root {
+  --color-bg-main: #F9FAFB;
+  --color-bg-card: #FFFFFF;
+  --color-border-main: #E5E7EB;
+  --color-text-main-primary: #111827;
+  --color-text-main-secondary: #4B5563;
+  --color-accent-teal-glow: rgba(13, 148, 136, 0.08);
+  --background: #F9FAFB;
+  --foreground: #111827;
 }
 
-:root {
+.dark {
+  --color-bg-main: #0B0F19;
+  --color-bg-card: #161D30;
+  --color-border-main: #2A354F;
+  --color-text-main-primary: #F3F4F6;
+  --color-text-main-secondary: #9CA3AF;
+  --color-accent-teal-glow: rgba(13, 148, 136, 0.15);
   --background: #0B0F19;
   --foreground: #F3F4F6;
 }
 
+@theme {
+  --color-accent-teal: #0D9488;
+  --color-accent-teal-glow: var(--color-accent-teal-glow);
+  --color-background-dark: var(--color-bg-main);
+  --color-card-dark: var(--color-bg-card);
+  --color-border-dark: var(--color-border-main);
+  --color-text-primary: var(--color-text-main-primary);
+  --color-text-secondary: var(--color-text-main-secondary);
+  --font-sans: var(--font-inter), sans-serif;
+  --font-heading: var(--font-poppins), sans-serif;
+}
+
 html, body {
   scroll-behavior: smooth;
-  background-color: #0B0F19;
-  color: #F3F4F6;
+  background-color: var(--color-bg-main);
+  color: var(--color-text-main-primary);
   overflow-x: hidden;
   min-height: 100%;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Custom Scrollbar */

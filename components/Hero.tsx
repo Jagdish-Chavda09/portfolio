@@ -213,22 +213,30 @@ export default function Hero() {
             </p>
           </div>
 
-          <p className="max-w-2xl mx-auto text-base sm:text-lg text-text-secondary leading-relaxed">
+          {/* Now / Status Line */}
+          <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold bg-accent-teal-glow text-accent-teal px-4 py-2 rounded-full border border-accent-teal/20">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            <span>Currently open to Java/Spring Boot fresher roles in Ahmedabad/Gandhinagar</span>
+          </div>
+
+          <p className="max-w-2xl mx-auto text-base sm:text-lg text-text-secondary leading-relaxed pt-2">
             Core Java & Spring Boot developer specializing in building scalable backend systems, 
             relational databases integrations (Oracle/MySQL), and high-performance server logic.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <motion.a
-              href="/resume.pdf"
-              download="Jagdish_Chavda_Resume.pdf"
+            <motion.button
+              onClick={() => window.dispatchEvent(new Event("open-resume"))}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="w-full sm:w-auto px-8 py-3 bg-accent-teal hover:bg-accent-teal-hover text-text-primary rounded-xl font-bold flex items-center justify-center gap-2 shadow-[0_4px_20px_0_rgba(13,148,136,0.3)] transition-all duration-200"
+              className="w-full sm:w-auto px-8 py-3 bg-accent-teal hover:bg-accent-teal-hover text-text-primary rounded-xl font-bold flex items-center justify-center gap-2 shadow-[0_4px_20px_0_rgba(13,148,136,0.3)] transition-all duration-200 cursor-pointer"
             >
-              Download Resume
-            </motion.a>
+              View Resume
+            </motion.button>
 
             <motion.a
               href="#contact"

@@ -86,17 +86,44 @@ export default function Learning() {
                 </p>
               </div>
 
-              {/* Progress Slider (Visual Indicator) */}
-              <div className="space-y-2 mt-auto">
-                <div className="flex justify-between text-xs font-mono">
-                  <span className="text-text-secondary">Study Progress</span>
-                  <span className="text-accent-teal font-semibold">{topic.progress}%</span>
+              {/* Progress Ring (Visual Indicator) */}
+              <div className="flex items-center justify-between mt-auto pt-6 border-t border-border-dark/40">
+                <div className="space-y-1">
+                  <span className="text-xs font-bold text-text-secondary uppercase tracking-wider block">Study Goal</span>
+                  <span className="text-[11px] font-mono text-accent-teal bg-accent-teal-glow px-2 py-0.5 rounded border border-accent-teal/10">
+                    {topic.progress >= 80 ? "Mastery Phase" : topic.progress >= 50 ? "Integration Phase" : "Concept Research"}
+                  </span>
                 </div>
-                <div className="h-1.5 bg-background-dark rounded-full overflow-hidden border border-border-dark/60">
-                  <div
-                    className="h-full bg-accent-teal rounded-full transition-all duration-1000"
-                    style={{ width: `${topic.progress}%` }}
-                  />
+                
+                <div className="relative w-14 h-14 flex items-center justify-center shrink-0">
+                  <svg className="w-full h-full transform -rotate-90">
+                    {/* Background Circle */}
+                    <circle
+                      cx="28"
+                      cy="28"
+                      r="22"
+                      className="stroke-border-dark"
+                      strokeWidth="3.5"
+                      fill="transparent"
+                    />
+                    {/* Progress Circle */}
+                    <motion.circle
+                      cx="28"
+                      cy="28"
+                      r="22"
+                      className="stroke-accent-teal"
+                      strokeWidth="3.5"
+                      fill="transparent"
+                      strokeDasharray={2 * Math.PI * 22}
+                      initial={{ strokeDashoffset: 2 * Math.PI * 22 }}
+                      whileInView={{ strokeDashoffset: 2 * Math.PI * 22 - (topic.progress / 100) * (2 * Math.PI * 22) }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1.5, ease: "easeOut" }}
+                    />
+                  </svg>
+                  <span className="absolute text-[10px] font-mono font-bold text-text-primary">
+                    {topic.progress}%
+                  </span>
                 </div>
               </div>
             </motion.div>
