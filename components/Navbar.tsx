@@ -75,7 +75,7 @@ export default function Navbar() {
             className="flex items-center gap-2 group min-h-[44px]"
           >
             <span className="text-xl font-heading font-extrabold tracking-wider text-text-primary">
-              JBC<span className="text-accent-teal font-black">.</span>
+              JERRY<span className="text-accent-teal font-black">.</span>
             </span>
             <span className="hidden sm:inline-block text-xs font-mono bg-border-dark text-accent-teal px-2 py-0.5 rounded border border-accent-teal/20 group-hover:border-accent-teal/60 transition-colors">
               Java Dev
