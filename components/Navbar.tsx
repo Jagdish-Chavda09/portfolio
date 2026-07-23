@@ -147,27 +147,55 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Menu Side Drawer */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="md:hidden bg-background-dark/95 backdrop-blur-lg border-b border-border-dark px-4 pt-2 pb-6 space-y-2 overflow-hidden"
-          >
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className="block px-3 py-3 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-card-dark transition-all duration-200 min-h-[44px]"
-              >
-                {link.name}
-              </a>
-            ))}
-          </motion.div>
+          <>
+            {/* Backdrop Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+            />
+            {/* Drawer Panel */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 bottom-0 w-64 z-50 bg-card-dark border-l border-border-dark p-6 flex flex-col space-y-6 shadow-2xl md:hidden"
+            >
+              {/* Header inside drawer */}
+              <div className="flex items-center justify-between border-b border-border-dark pb-4">
+                <span className="text-lg font-heading font-extrabold tracking-wider text-text-primary">
+                  JBC<span className="text-accent-teal font-black">.</span>
+                </span>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="w-10 h-10 flex items-center justify-center rounded-lg text-text-secondary hover:text-text-primary hover:bg-border-dark transition-colors cursor-pointer"
+                  aria-label="Close Menu"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Navigation links inside drawer */}
+              <nav className="flex flex-col space-y-3">
+                {navLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className="block px-3 py-3 rounded-xl text-base font-semibold text-text-secondary hover:text-accent-teal hover:bg-background-dark/50 transition-all duration-200 min-h-[44px]"
+                  >
+                    {link.name}
+                  </a>
+                ))}
+              </nav>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
 

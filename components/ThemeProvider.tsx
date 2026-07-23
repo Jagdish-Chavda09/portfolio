@@ -1,61 +1,27 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React from "react";
+import { ThemeProvider as NextThemesProvider, useTheme as useNextTheme } from "next-themes";
 
-type Theme = "dark" | "light";
-
-interface ThemeContextType {
-  theme: Theme;
-  toggleTheme: () => void;
-}
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
-    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else if (!systemPrefersDark) {
-      setTheme("light");
-    }
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-    
-    const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-      root.style.colorScheme = "dark";
-    } else {
-      root.classList.remove("dark");
-      root.style.colorScheme = "light";
-    }
-    localStorage.setItem("theme", theme);
-  }, [theme, mounted]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  };
-
+export function ThemeProvider({ children, ...props }: { children: React.ReactNode; [key: string]: any }) {
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <NextThemesProvider attribute="class" defaultTheme="system" enableSystem {...props}>
       {children}
-    </ThemeContext.Provider>
+    </NextThemesProvider>
   );
 }
 
 export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error("useTheme must be used within a ThemeProvider");
-  }
-  return context;
+  const { theme, setTheme, resolvedTheme } = useNextTheme();
+  
+  const toggleTheme = () => {
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  };
+
+  return {
+    theme: (resolvedTheme || "dark") as "dark" | "light",
+    toggleTheme,
+    rawTheme: theme,
+    setTheme,
+  };
 }

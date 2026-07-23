@@ -1,10 +1,17 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { BookOpen, GraduationCap, Award } from "lucide-react";
 import Image from "next/image";
 
 export default function About() {
+  const [canHover, setCanHover] = useState(false);
+
+  useEffect(() => {
+    setCanHover(window.matchMedia("(hover: hover)").matches);
+  }, []);
+
   const stats = [
     { icon: <BookOpen className="text-accent-teal" size={24} />, name: "Education", value: "MCA (Ongoing)" },
     { icon: <GraduationCap className="text-accent-teal" size={24} />, name: "Academic Average", value: "87% (Sem 2)" },
@@ -50,15 +57,15 @@ export default function About() {
               
               {/* Profile Image Container */}
               <motion.div
-                whileHover={{ scale: 1.03, rotate: 0.5 }}
+                whileHover={canHover ? { scale: 1.03, rotate: 0.5 } : {}}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="relative w-[220px] h-[220px] sm:w-[340px] sm:h-[340px] rounded-2xl overflow-hidden bg-card-dark border border-border-dark shadow-2xl flex items-center justify-center"
+                className="relative w-48 sm:w-64 md:w-80 lg:w-96 aspect-[3/2] rounded-2xl overflow-hidden bg-card-dark border border-slate-200 dark:border-border-dark shadow-2xl flex items-center justify-center ring-4 ring-slate-100 dark:ring-accent-teal/10 hover:ring-accent-teal/30 dark:hover:ring-accent-teal/30 transition-all duration-300"
               >
                 <Image
-                  src="/my.jpg"
+                  src="/images/profile.webp"
                   alt="Jagdish B Chavda - Java & Spring Boot Developer"
                   fill
-                  sizes="(max-width: 640px) 220px, 340px"
+                  sizes="(max-width: 640px) 192px, (max-width: 768px) 256px, (max-width: 1024px) 320px, 384px"
                   priority
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />

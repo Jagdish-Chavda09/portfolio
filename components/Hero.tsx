@@ -201,13 +201,13 @@ export default function Hero() {
             <span>Gandhinagar, Gujarat</span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-heading font-extrabold tracking-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold tracking-tight leading-tight">
             Hi, I&apos;m <span className="text-gradient">Jagdish B Chavda</span>
           </h1>
 
           {/* Typewriter role showcase */}
-          <div className="h-10 sm:h-12 flex items-center justify-center">
-            <p className="text-lg sm:text-2xl font-mono text-text-secondary">
+          <div className="min-h-[3rem] sm:min-h-[4rem] flex items-center justify-center py-1">
+            <p className="text-xl sm:text-3xl md:text-4xl font-mono text-text-secondary leading-snug">
               I am a <span className="text-accent-teal font-semibold">{typedText}</span>
               <span className="animate-pulse text-accent-teal font-bold ml-1">|</span>
             </p>
