@@ -55,7 +55,7 @@ export default function About() {
                 className="relative w-[220px] h-[220px] sm:w-[340px] sm:h-[340px] rounded-2xl overflow-hidden bg-card-dark border border-border-dark shadow-2xl flex items-center justify-center"
               >
                 <Image
-                  src="/profile.png"
+                  src="/my.jpg"
                   alt="Jagdish B Chavda - Java & Spring Boot Developer"
                   fill
                   sizes="(max-width: 640px) 220px, 340px"
