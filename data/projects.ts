@@ -9,7 +9,7 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    title: "Travel Agency System",
+    title: "Flight Website",
     description: "A layered CRUD-based management system built for travel operators to manage bookings, clients, itineraries, and reports.",
     longDescription: "Features database relational mapping, dynamic reporting dashboards, and clean layered software architecture principles. Handled form validations, secure database access layers, and clean UI components.",
     techBadges: ["PHP", "MySQL", "HTML5", "CSS3", "JavaScript", "Bootstrap"],
@@ -25,7 +25,7 @@ export const projects: Project[] = [
     liveDemoLink: "#"
   },
   {
-    title: "Developer Portfolio",
+    title: "Develop a Portfolio",
     description: "A premium, fully animated personal portfolio showcasing credentials, academic timelines, skills, and contact operations.",
     longDescription: "Built with Next.js (App Router), TypeScript, and Tailwind CSS. Features highly customized Framer Motion scroll and entry animations, alongside client-side React Hook Form validation, and a Next.js serverless API route.",
     techBadges: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "Nodemailer"],

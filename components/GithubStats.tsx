@@ -56,7 +56,7 @@ export default function GithubStats() {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={`https://github-readme-stats.vercel.app/api/top-langs/?username=Jagdish-Chavda09&layout=compact&theme=${statsTheme}&border_radius=12&bg_color=${theme === "dark" ? "161D30" : "FFFFFF"}`}
+              src={`https://github-readme-stats.vercel.app/api/top-langs/?username=Jagdish-Chavda09&repo=Andriod_Project&layout=compact&theme=${statsTheme}&border_radius=12&bg_color=${theme === "dark" ? "161D30" : "FFFFFF"}`}
               alt="Jagdish B Chavda's Top Languages"
               className="w-full max-w-md h-auto object-contain"
               loading="lazy"
