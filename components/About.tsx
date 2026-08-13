@@ -15,7 +15,7 @@ export default function About() {
   const stats = [
     { icon: <BookOpen className="text-accent-teal" size={24} />, name: "Education", value: "MCA (Ongoing)" },
     { icon: <GraduationCap className="text-accent-teal" size={24} />, name: "Academic Average", value: "87% (Sem 2)" },
-    { icon: <Award className="text-accent-teal" size={24} />, name: "Key Skills", value: "Java, Spring Boot" },
+    { icon: <Award className="text-accent-teal" size={24} />, name: "Key Skills", value: "Java, Javascript, Nodejs, php" },
   ];
 
   return (
